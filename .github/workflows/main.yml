@@ -1,0 +1,29 @@
+name: PR Checklist
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  pr-checklist:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR Checklist
+        run: |
+          pr_checklist_file="pr_checklist.md"
+          pr_title=$(jq -r .pull_request.title "$GITHUB_EVENT_PATH")
+
+          if [[ $pr_title == *"WIP"* ]]; then
+            echo "PR is a Work in Progress. Skipping checklist."
+            exit 0
+          fi
+
+          if [[ -f "$pr_checklist_file" ]]; then
+            if ! grep -E "\- \[x\]" "$pr_checklist_file"; then
+              echo "PR checklist is not complete. Please check all items before merging."
+              exit 1
+            fi
+          fi

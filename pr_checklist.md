@@ -1,0 +1,5 @@
+- [ ] Check if the code follows coding standards.
+- [ ] Ensure that all tests pass.
+- [ ] Verify that the documentation is up to date.
+- [ ] Review and address all code review comments.
+- [ ] Test the changes in a local development environment.
